@@ -1,0 +1,30 @@
+title: [DETECTION NAME]
+id: [ID NUMBER]
+status: [OPERATIONAL/EXPERIMENTAL]
+description: [DETECTION DESCRIPTION]
+author: [AUTHOR NAME]
+date: [DATE CREATED]
+lastmodified: [DATE LAST MODIFIED]
+references:
+   [ANY REFERENCE LINKS]
+tags:
+   [MITRE TAGS, noted as "attack.collection" or "attack.t1098.001" etc]
+logsource:
+    product: [SOFTWARE (i.e. Okta, Github, Crowdstrike, etc.]
+    sourcetype: [SOURCETYPE]
+    definition: 'Requirements: The audit log streaming feature must be enabled to be able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'
+detection:
+    selection:
+        action:
+            - 'project.update_user_permission'
+            - 'org.remove_outside_collaborator'
+    condition: selection
+fields:
+    - 'action'
+    - 'actor'
+    - 'org'
+    - 'actor_location.country_code'
+falsepositives:
+    - Validate the actor if permitted to access the repo.
+    - Validate the Multifactor Authentication changes.
+level: medium
