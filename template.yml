@@ -1,3 +1,5 @@
+#Refer to the schema at schema.yml for additional details on fields.
+
 title: [DETECTION NAME]
 id: [ID NUMBER]
 status: [OPERATIONAL/EXPERIMENTAL]
@@ -11,20 +13,13 @@ tags:
    [MITRE TAGS, noted as "attack.collection" or "attack.t1098.001" etc]
 logsource:
     product: [SOFTWARE (i.e. Okta, Github, Crowdstrike, etc.]
-    sourcetype: [SOURCETYPE]
-    definition: 'Requirements: The audit log streaming feature must be enabled to be able to receive such logs. You can enable following the documentation here: https://docs.github.com/en/enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/streaming-the-audit-log-for-your-enterprise#setting-up-audit-log-streaming'
-detection:
+    definition: [DETAIL ON LOGSOURCE OR NECESSARY CONFIGS]
     selection:
         action:
-            - 'project.update_user_permission'
-            - 'org.remove_outside_collaborator'
-    condition: selection
+            - [EVENT NAME]
+    condition: [DETECTION CONDITION]
 fields:
-    - 'action'
-    - 'actor'
-    - 'org'
-    - 'actor_location.country_code'
+    - [LOG METADATA FIELDS]
 falsepositives:
-    - Validate the actor if permitted to access the repo.
-    - Validate the Multifactor Authentication changes.
-level: medium
+    - [KNOWN FALSE POSITIVES]
+level: [SEVERITY]
