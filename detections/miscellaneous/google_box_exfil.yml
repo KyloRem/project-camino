@@ -1,0 +1,14 @@
+
+
+#Box portion
+index=box sourcetype=box:events trent.becker@ibotta.com action IN (read, downloaded) 
+| rename source_item_name as file, action as action, source_owned_by_login as owner, created_by_login as actor
+|  table file, action, owner, actor, ip_address
+
+
+#Google portion
+index=google sourcetype=gws:reports:drive "actor.email"=trent.becker@ibotta.com event.name IN (view, edit, download)
+| rename actor.email AS src_user, owner AS document_owner, event.name AS event, doc_title AS document_title, doc_type AS document_type
+| table src_user, document_owner, event, document_title, document_type, _time
+| eval document_title=mvjoin(document_title,"|")
+| makemv document_title delim="|"
