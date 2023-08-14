@@ -1,7 +1,7 @@
-
+ 
 
 #Box portion
-index=box sourcetype=box:events trent.becker@ibotta.com action IN (read, downloaded) 
+index=box sourcetype=box:events trent.becker@ibotta.com action IN (read, copied, downloaded, deleted, shared) 
 | rename source_item_name as file, action as action, source_owned_by_login as owner, created_by_login as actor
 |  table file, action, owner, actor, ip_address
 
