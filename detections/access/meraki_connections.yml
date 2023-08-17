@@ -1,9 +1,8 @@
 
 #This is a working version using an automatic lookup table with user and device name
-index=cisco sourcetype=meraki:accesspoints ssidName="IBE" description="802.11 association" 
+index=cisco sourcetype=meraki:accesspoints description="802.11 association"
 | rename User as employee, clientDescription as hostname
-| dedup employee
-| table employee, hostname, _time
+| stats values(hostname) as hostname, values(ssidName) as network values(occurredAt) BY employee
 
 
 
