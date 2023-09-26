@@ -1,0 +1,18 @@
+#An adversary could disable alerting simply by deletiing the destination of alerts.
+#AWS Reference: https://docs.aws.amazon.com/cli/latest/reference/guardduty/delete-publishing-destination.html
+
+index=aws 
+sourcetype="aws:cloudtrail"
+eventName=DeletePublishingDestination
+| table _time, eventSource, eventName, src_ip, userIdentity.arn, userIdentity.accountId, userIdentity.accessKeyId
+
+
+#Triage and Response:
+#Determine which user in your organization owns the API key that made this API call.
+#Contact the user to see if they intended to make this API call.
+#If the user did not make the API call:
+#Rotate the credentials.
+#Investigate if the same credentials made other unauthorized API calls.
+
+#Tactic: TA0005 Defense Evasion
+#Technique: T1562 Impair Defenses
