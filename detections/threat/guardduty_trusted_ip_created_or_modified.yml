@@ -1,1 +1,9 @@
 
+#An attacker could create or update GuardDuty's trusted IP list, including their own IP on the list. Any IPs in a trusted IP list will not have any Cloudtrail or VPC flow log alerts raised against them. 
+
+index=aws 
+sourcetype=aws:cloudtrail
+eventSource="guardduty.amazonaws.com" 
+eventName IN (CreateIPSet, UpdateIPSet)
+| table _time, eventSource, eventName, src_ip, userIdentity.arn, userIdentity.accountId, userIdentity.accessKeyId
+
