@@ -1,11 +1,10 @@
 
 #Searches for multiple push failures by user
-#Needs to be tuned for a timeframe still 
 
 index=okta
 eventType="user.authentication.auth_via_mfa" AND outcome.result="FAILURE"
 outcome.reason="INVALID_CREDENTIALS" 
 debugContext.debugData.factor="OKTA_VERIFY_PUSH" 
-| stats count by actor.alternateId 
-| where count > 5
-
+| bin _time span=30m
+| stats count by actor.alternateId
+| where count > 4
