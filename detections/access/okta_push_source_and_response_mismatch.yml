@@ -1,6 +1,8 @@
 
 #This analytic identifies variations in client-based values for source (eventType=system.push.send_factor_verify_push) and response (user.authentication.auth_via_mfa) events to identify suspicious request behavior.
-#Reference: https://research.splunk.com/application/8085b79b-9b85-4e67-ad63-351c9e9a5e9a/
+#Analytic Reference: https://research.splunk.com/application/8085b79b-9b85-4e67-ad63-351c9e9a5e9a/
+#MITRE Reference: https://attack.mitre.org/techniques/T1621/
+
 
 index=okta 
 eventType IN (system.push.send_factor_verify_push) OR (eventType IN (user.authentication.auth_via_mfa) debugContext.debugData.factor="OKTA_VERIFY_PUSH") 
