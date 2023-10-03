@@ -1,0 +1,9 @@
+
+#This alert looks for authentication events from countries in which we would expect no employees to be working. It's built on a lookup table filled with countries that would need to be updated. 
+
+index=okta sourcetype=OktaIM2:log tag=authentication OR eventType IN (user.authentication.verify, policy.evaluate_sign_on, user.session.start) [ | inputlookup blocklist_countries.csv | rename Country as request.ipChain{}.geographicalContext.country ] outcome.result=success
+    NOT ("actor.alternateId" IN ("*-op@ibotta.com", "*-cf@ibotta.com", "*@es.cloudfactory.com") AND "request.ipChain{}.geographicalContext.country" IN ("India", "Philippines", "Kenya", "Nepal", "South Africa")) 
+| rename request.ipChain{}.geographicalContext.country as country, actor.alternateId AS user, outcome.result AS action, outcome.result AS outcome
+| stats values(_time) AS orig_time values(eventType) as event, values(outcome) as outcome, values(src_ip) as src_ip, values(country) as country, values(displayMessage) AS signature by user 
+| convert ctime(orig_time)
+
