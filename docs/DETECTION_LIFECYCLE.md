@@ -14,7 +14,7 @@ Before writing any detection logic, you need to understand what you're detecting
 
 - [ ] Define the attacker's goal.  
 - [ ] What events or API calls would indicate this behavior?  
-    - Define what's detectable and be specific (e.g. "S3: PutObject to external bucket" instead of "S3 Suspicious Activity"  
+    - Define what's detectable and be specific (e.g. "S3: PutObject to external bucket" instead of "S3 Suspicious Activity")  
 - [ ] Identify data sources for the event(s)  
     - AWS Cloudtrail/GuardDuty? Okta IM2:log? Crowdstrike:devices?  
 - [ ] Identify MITRE ATT&CK technique(s)  
@@ -34,9 +34,9 @@ Example:
 - `by IAM User` (actor context)
 - `from new IP address` (risk indicator)
 
-[] Write the core query  
-[] Add immediate context filters to remove obvious noise  
-[] Enrich with fields an analyst would need to investigate  
+- [ ] Write the core query  
+- [ ] Add immediate context filters to remove obvious noise  
+- [ ] Enrich with fields an analyst would need to investigate  
     - Who? (user, role, service account)  
     - What? (resource affected, action taken)  
     - Where? (region, account, network)  
