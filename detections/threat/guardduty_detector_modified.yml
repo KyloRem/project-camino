@@ -1,8 +1,0 @@
-
-#An attacker could modify an existing GuardDuty detector in the account, to remove log sources or lessen its effectiveness.
-
-index=aws 
-sourcetype="aws:cloudtrail"
-eventName=UpdateDetector
-eventSource="guardduty.amazonaws.com" 
-| table _time, eventSource, eventName, src_ip, userIdentity.arn, userIdentity.accountId, userIdentity.accessKeyId

@@ -1,7 +1,0 @@
-
-#Resetting all MFA factors can be triggered by a bad actor, human error or an IT administrator helping a customer.
-
-#Reference: https://github.com/okta/workflows-templates/blob/master/workflows/trigger_notifications_when_all_mfa_factors_are_res/readme.md
-#Okta Reference: https://sec.okta.com/articles/2023/08/cross-tenant-impersonation-prevention-and-detection
-
-index=okta eventType=user.mfa.factor.reset_all
