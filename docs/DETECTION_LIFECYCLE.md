@@ -12,12 +12,12 @@ This process serves as your blueprint; use it to journey from an abstract threat
 
 Before writing any detection logic, you need to understand what you're detecting and why. A clear threat model prevents you from chasing vague "suspicious activity" and keeps the detection focused on real attacker behavior.
 
-[] Define the attacker's goal.  
-[] What events or API calls would indicate this behavior?  
+- [ ] Define the attacker's goal.  
+- [ ] What events or API calls would indicate this behavior?  
     - Define what's detectable and be specific (e.g. "S3: PutObject to external bucket" instead of "S3 Suspicious Activity"  
-[] Identify data sources for the event(s)  
+- [ ] Identify data sources for the event(s)  
     - AWS Cloudtrail/GuardDuty? Okta IM2:log? Crowdstrike:devices?  
-[] Identify MITRE ATT&CK technique(s)  
+- [ ] Identify MITRE ATT&CK technique(s)  
     - [Cloud Matrix](https://attack.mitre.org/matrices/enterprise/cloud/)  
     - [Containers Matrix](https://attack.mitre.org/matrices/enterprise/containers/)  
 
@@ -71,9 +71,9 @@ When building high quality, resilient detections, you need to consider multiple 
 
 ### Scalable Solutions
 
-[] Use dynamic baselining (e.g. compare today's activity to the entity's history over the last 30 days)  
-[] Use relative thresholds (e.g. `10x normal` not fixed numbers)  
-[] Use tag-based logic (leverage entity's own asset tags if possible)  
+- [ ] Use dynamic baselining (e.g. compare today's activity to the entity's history over the last 30 days)  
+- [ ] Use relative thresholds (e.g. `10x normal` not fixed numbers)  
+- [ ] Use tag-based logic (leverage entity's own asset tags if possible)  
     - Detection still fires without tags, tags just enhance severity/context  
 
 Example:
@@ -95,7 +95,7 @@ Design detections with fallback tiers:
 | 2 (Okay) | No baseline, have account info | Alert if different AWS account | High |
 | 3 (Basic) | Minimal context | Alert if high volume + unusual time | Medium |
 
-[] Document graceful degradation tiers in `scale.yaml`
+- [ ] Document graceful degradation tiers in `scale.yaml`
 
 ## Phase 4: Tuning Strategy
 
@@ -104,42 +104,42 @@ In development, "drift" is when a deployed system (in our case, a detection) exp
 Phase 4 aims to define a systematic process for reducing false positives after deployment via a Four-Layer Tuning Method. 
 
 **Layer 1: Tighten Core Logic**
-[] Combine multiple weak signals  
-[] Add time-based correlation  
-[] Require sequence of events  
+- [ ] Combine multiple weak signals  
+- [ ] Add time-based correlation  
+- [ ] Require sequence of events  
 
 **Layer 2: Exclude Known-Good**
-[] Service account exclusions (with documented reason)  
-[] Automation tool filtering  
-[] Expected maintenance windows  
-[] Known infrastructure patterns  
+- [ ] Service account exclusions (with documented reason)  
+- [ ] Automation tool filtering  
+- [ ] Expected maintenance windows  
+- [ ] Known infrastructure patterns  
 
 *Requires feedback loops - analysts mark FPs, exclusions get added.*
 
 **Layer 3: Add Baseline Context**
 Detect deviation from normal, not just "suspicious" actions.
 
-[] First-time-seen logic (new bucket, new region, new role)  
-[] Volume anomalies (10x normal transfer)  
-[] Temporal anomalies (3am activity for 9-5 user)  
-[] Geographic anomalies (login from new country)  
+- [ ] First-time-seen logic (new bucket, new region, new role)  
+- [ ] Volume anomalies (10x normal transfer)  
+- [ ] Temporal anomalies (3am activity for 9-5 user)  
+- [ ] Geographic anomalies (login from new country)  
 
 **Layer 4: Require Business Impact**
 Focus on what matters. Filter for:
 
-[] Critical assets  
+- [ ] Critical assets  
 ```spl
 | where (bucket IN critical_buckets) OR (resourceTags LIKE "%production%")
 ```
-[] Data classification  
+- [ ] Data classification  
 ```spl
 | where data_classification IN ("restricted", "confidential")
 ```
-[] Compliance scope  
+- [ ] Compliance scope  
 ```spl
 | where (pci_scope=true OR sox_scope=true)
 ```
-[] Privilege level  
+- [ ] Privilege level  
 ```spl
 | where (admin_role=true OR cross_account_role=true)
 ```
@@ -157,11 +157,11 @@ Good: `Lambda execution role wrote to external S3 bucket`
 
 ### Required Alert Components
 
-[] Clear, descriptive title  
-[] Severity rating based on risk  
-[] Key fields surfaced (who, what, where, when)  
-[] Recommended response steps  
-[] Links to relevant runbooks or resources  
+- [ ] Clear, descriptive title  
+- [ ] Severity rating based on risk  
+- [ ] Key fields surfaced (who, what, where, when)  
+- [ ] Recommended response steps  
+- [ ] Links to relevant runbooks or resources  
 
 ### Example Alert
 ```
@@ -179,4 +179,4 @@ Recommended Actions:
 4. Check for other exfil indicators
 ```
 
-[] Document alert template in detection's README.md
+- [ ] Document alert template in detection's README.md 
