@@ -1,0 +1,14 @@
+# Test configuration for detection validation
+# Defines mock values for macros and lookups 
+# Use this to test unique variables don't scale well across organizations.
+
+macros:
+  aws_cloudtrail: 'index=aws sourcetype=aws:cloudtrail'
+
+lookups:
+  aws_accounts_allowed:
+    # accountId: accountName
+    # Accounts listed here are "known good" - should NOT trigger alerts
+    "111111111111": "internal-prod"
+    "222222222222": "internal-dev"
+    # Note: 999999999999 is intentionally absent (simulates external/unknown account)

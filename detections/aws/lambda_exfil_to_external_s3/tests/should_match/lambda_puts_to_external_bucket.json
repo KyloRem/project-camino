@@ -1,0 +1,46 @@
+{
+  "eventVersion": "1.08",
+  "userIdentity": {
+    "type": "AssumedRole",
+    "principalId": "AROA1234567890EXAMPLE:my-lambda-function",
+    "arn": "arn:aws:sts::111111111111:assumed-role/my-lambda-role/my-lambda-function",
+    "accountId": "111111111111",
+    "sessionContext": {
+      "sessionIssuer": {
+        "type": "Role",
+        "principalId": "AROA1234567890EXAMPLE",
+        "arn": "arn:aws:iam::111111111111:role/my-lambda-role",
+        "accountId": "111111111111",
+        "userName": "my-lambda-role"
+      },
+      "attributes": {
+        "creationDate": "2025-01-15T14:30:00Z",
+        "mfaAuthenticated": "false"
+      }
+    },
+    "invokedBy": "lambda.amazonaws.com"
+  },
+  "eventTime": "2025-01-15T14:32:45Z",
+  "eventSource": "s3.amazonaws.com",
+  "eventName": "PutObject",
+  "awsRegion": "us-east-1",
+  "sourceIPAddress": "lambda.amazonaws.com",
+  "userAgent": "aws-internal/3 aws-sdk-java/1.12.262",
+  "requestParameters": {
+    "bucketName": "external-exfil-bucket",
+    "key": "data/dump-2025-01-15.tar.gz"
+  },
+  "responseElements": null,
+  "resources": [
+    {
+      "type": "AWS::S3::Bucket",
+      "ARN": "arn:aws:s3:::external-exfil-bucket",
+      "accountId": "999999999999" 
+    }
+  ],
+  "eventID": "a1b2c3d4-5678-90ab-cdef-EXAMPLE11111",
+  "readOnly": false,
+  "eventType": "AwsApiCall",
+  "managementEvent": false,
+  "recipientAccountId": "111111111111"
+}
