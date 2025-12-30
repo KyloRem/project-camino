@@ -1,6 +1,8 @@
 # Project Camino
 
-A detection-as-code repository demonstrating security detection engineering best practices. Built following Datadog's detection-as-code patterns with a structured 5-phase detection development lifecycle.
+Project Camino, detection-as-code repository demonstrating security detection engineering best practices. Built following Datadog's detection-as-code patterns with a structured 5-phase detection development lifecycle.
+
+Fun Fact: The name of this project is an homage to The Band Camino, a favorite music group of the developer. Their album "NeverAlways" was streamed for many hours during development. 
 
 ![project camino logo](assets/projectCaminoLogo.png)
 
