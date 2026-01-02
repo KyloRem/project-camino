@@ -12,6 +12,7 @@ detections/aws/s3_exfil_external_bucket/
 └── tests/
     ├── should_match/
     └── should_not_match/
+└── test_config.yaml
 ```
 
 ## Required Files
@@ -22,6 +23,7 @@ detections/aws/s3_exfil_external_bucket/
 | README.md | Threat model context and analyst runbook | 1, 5 |
 | tests/should_match/ | Sample logs that must trigger the detection | 2 |
 | tests/should_not_match/ | Sample logs that must not trigger (FP tests) | 4 |
+| test_config.yaml | (Optional) Test configs/values for macros, lookups, etc. | 2, 4 |
 
 ## File Specifications
 
