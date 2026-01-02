@@ -1,8 +1,8 @@
 # Project Camino
 
-Project Camino, detection-as-code repository demonstrating security detection engineering best practices. Built following Datadog's detection-as-code patterns with a structured 5-phase detection development lifecycle.
+Project Camino is a detection-as-code repository demonstrating security detection engineering best practices. Built following Datadog's detection-as-code patterns with a structured 5-phase detection development lifecycle.
 
-Fun Fact: The name of this project is an homage to The Band Camino, a favorite music group of the developer. Their album "NeverAlways" was streamed for many hours during development. 
+Fun Fact: The name of this project is an homage to The Band Camino, one of Rem's favorite bands. Their album "NeverAlways" was streamed for many hours during development. 
 
 ![project camino logo](assets/projectCaminoLogo.png)
 
@@ -37,17 +37,18 @@ See [DETECTION_LIFECYCLE.md](docs/DETECTION_LIFECYCLE.md) for full details.
 
 ## Repository Structure
 ```
-├── docs/                      # Framework and standards
-│   ├── DETECTION_LIFECYCLE.md # 5-phase detection methodology
-│   └── SCHEMA.md              # Detection completeness requirements
-├── detections/                # Detection rules by data source
+├── docs/                           # Framework and standards
+│   ├── DETECTION_LIFECYCLE.md      # 5-phase detection methodology
+│   └── SCHEMA.md                   # Detection completeness requirements
+├── detections/                     # Detection rules by data source
 │   └── aws/
 │       └── <detection_name>/
-│           ├── detection.tf   # Detection logic (Terraform)
-│           ├── README.md      # Threat model + runbook
-│           └── tests/         # Validation test cases
-├── lib/                       # Python tooling (validation, coverage)
-└── organizations/             # Terraform deployment configs
+│           ├── detection.tf        # Detection logic (Terraform)
+│           ├── README.md           # Threat model + runbook
+│           └── tests/              # Validation test cases
+            └── test_config.yaml    # (Optional) Test configs for detection efficacy (e.g. macros)
+├── lib/                            # Python tooling (validation, coverage)
+└── organizations/                  # Terraform deployment configs
 ```
 
 ## Detections
