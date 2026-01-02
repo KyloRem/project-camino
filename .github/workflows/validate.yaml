@@ -1,0 +1,24 @@
+name: Detection Schema Validations
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  schema-validations:
+    runs-on: ubuntu-22.04               # Pinning version is best practice for reproducibility
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python 
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'        # Pinning version is best practice for reproducibility
+
+      - name: Run schema validator  
+        run: python3 lib/validators/schema_validator.py
