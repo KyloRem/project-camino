@@ -95,3 +95,5 @@ for condition in test_config['conditions']:
         result = "PASS" if actual not in lookup_data else "FAIL"
         print(f"{field}: '{actual}' is not in lookup '{lookup_name}' → {result}")
 
+
+#TODO - Add should NOT match criteria.  
