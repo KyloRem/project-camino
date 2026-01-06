@@ -12,3 +12,22 @@ lookups:
     "111111111111": "internal-prod"
     "222222222222": "internal-dev"
     # Note: 999999999999 is intentionally absent (simulates external/unknown account)
+
+conditions:
+  - field: "eventName"
+    operator: "in"
+    values: ["PutObject", "CopyObject"]
+  - field: "userIdentity.type"
+    operator: "equals"
+    value: "AssumedRole"
+  - field: "userIdentity.arn"
+    operator: "contains"
+    value: "lambda.amazonaws.com"
+  - field: "userIdentity.accountId"
+    operator: "not_equals_field"
+    other_field: "resources[0].accountId"
+  - field: "resources[0].accountId"
+    operator: "not_in_lookup"
+    lookup: "aws_accounts_allowed"
+
+    
