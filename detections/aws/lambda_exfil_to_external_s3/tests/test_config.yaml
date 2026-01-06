@@ -1,9 +1,9 @@
 # Test configuration for detection validation
-# Defines mock values for macros and lookups 
+# Defines mock values for macros and lookups
 # Use this to test unique variables don't scale well across organizations.
 
 macros:
-  aws_cloudtrail: 'index=aws sourcetype=aws:cloudtrail'
+  aws_cloudtrail: "index=aws sourcetype=aws:cloudtrail"
 
 lookups:
   aws_accounts_allowed:
@@ -20,7 +20,7 @@ conditions:
   - field: "userIdentity.type"
     operator: "equals"
     value: "AssumedRole"
-  - field: "userIdentity.arn"
+  - field: "userIdentity.invokedBy"
     operator: "contains"
     value: "lambda.amazonaws.com"
   - field: "userIdentity.accountId"
@@ -29,5 +29,3 @@ conditions:
   - field: "resources[0].accountId"
     operator: "not_in_lookup"
     lookup: "aws_accounts_allowed"
-
-    
