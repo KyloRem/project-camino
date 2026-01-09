@@ -2,15 +2,15 @@
 
 Project Camino is a detection-as-code repository demonstrating security detection engineering best practices. Built following Datadog's detection-as-code patterns with a structured 5-phase detection development lifecycle.
 
-Fun Fact: The name of this project is an homage to The Band Camino, one of Rem's favorite bands. Their album "NeverAlways" was streamed for many hours during development. 
+Fun Fact: The name of this project is an homage to The Band Camino, one of Rem's favorite bands. Their album "NeverAlways" was streamed for many hours during development.
 
 ![project camino logo](assets/projectCaminoLogo.png)
 
 ## Overview
 
-Project Camino treats security detections as code. These detections are version controlled, tested, and deployed through CI/CD pipelines; each detection includes threat modeling documentation, detection logic in Terraform, and test cases for validation. 
+Project Camino treats security detections as code. These detections are version controlled, tested, and deployed through CI/CD pipelines; each detection includes threat modeling documentation, detection logic in Terraform, and test cases for validation.
 
-When developing new detections, scalability and resiliency that accounts for different environmental factors as well as edge cases should be prioritized. 
+When developing new detections, scalability and resiliency that accounts for different environmental factors as well as edge cases should be prioritized.
 
 **Current platform:** Detections are written in Splunk SPL using the Splunk Terraform provider, but the patterns and methodology are transferable to other SIEMs with Terraform support.
 
@@ -25,37 +25,40 @@ When developing new detections, scalability and resiliency that accounts for dif
 
 Every detection follows a 5-phase process:
 
-| Phase | Focus | Artifact |
-|-------|-------|----------|
-| 1. Threat Model | What are we detecting and why? | README.md |
-| 2. Initial Detection | Core query: Event + Actor + Risk | detection.tf |
-| 3. Scale Considerations | Baselines, graceful degradation | detection.tf |
-| 4. Tuning Strategy | Reduce false positives | detection.tf |
-| 5. Signal Quality | Actionable alerts | detection.tf, README.md |
+| Phase                   | Focus                            | Artifact                |
+| ----------------------- | -------------------------------- | ----------------------- |
+| 1. Threat Model         | What are we detecting and why?   | README.md               |
+| 2. Initial Detection    | Core query: Event + Actor + Risk | detection.tf            |
+| 3. Scale Considerations | Baselines, graceful degradation  | detection.tf            |
+| 4. Tuning Strategy      | Reduce false positives           | detection.tf            |
+| 5. Signal Quality       | Actionable alerts                | detection.tf, README.md |
 
 See [DETECTION_LIFECYCLE.md](docs/DETECTION_LIFECYCLE.md) for full details.
 
 ## Repository Structure
+
 ```
-├── docs/                           # Framework and standards
-│   ├── DETECTION_LIFECYCLE.md      # 5-phase detection methodology
-│   └── SCHEMA.md                   # Detection completeness requirements
-├── detections/                     # Detection rules by data source
+├── docs/                               # Framework and standards
+│   ├── DETECTION_LIFECYCLE.md          # 5-phase detection methodology
+│   └── SCHEMA.md                       # Detection completeness requirements
+├── detections/                         # Detection rules by data source
 │   └── aws/
 │       └── <detection_name>/
-│           ├── detection.tf        # Detection logic (Terraform)
-│           ├── README.md           # Threat model + runbook
-│           └── tests/              # Validation test cases
-            └── test_config.yaml    # (Optional) Test configs for detection efficacy (e.g. macros)
-├── lib/                            # Python tooling (validation, coverage)
-└── organizations/                  # Terraform deployment configs
+│           ├── detection.tf            # Detection logic (Terraform)
+│           ├── README.md               # Threat model + runbook
+│           └── tests/                  # Validation test cases
+│               └── should_match/       # Test logs that should trip the detection
+│               └── should_not_match/   # Test logs that should NOT trip the detection
+│               └── test_config.yaml    # Test configs for detection efficacy (e.g. macros)
+├── lib/                                # Python tooling (validation, coverage, automation)
+└── organizations/                      # Terraform deployment configs
 ```
 
 ## Detections
 
-| Detection | Data Source | MITRE ATT&CK |
-|-----------|-------------|--------------|
-| [Lambda Exfil to External S3](detections/aws/lambda_exfil_to_external_s3/) | AWS CloudTrail | T1537 |
+| Detection                                                                  | Data Source    | MITRE ATT&CK |
+| -------------------------------------------------------------------------- | -------------- | ------------ |
+| [Lambda Exfil to External S3](detections/aws/lambda_exfil_to_external_s3/) | AWS CloudTrail | T1537        |
 
 ## References
 
