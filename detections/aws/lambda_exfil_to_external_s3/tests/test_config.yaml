@@ -3,7 +3,9 @@
 # Use this to test unique variables don't scale well across organizations.
 
 macros:
-  aws_cloudtrail: "index=aws sourcetype=aws:cloudtrail"
+  "aws cloudtrail":
+    index: "aws"
+    sourcetype: "aws:cloudtrail"
 
 lookups:
   aws_accounts_allowed:
