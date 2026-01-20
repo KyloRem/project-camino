@@ -1,6 +1,25 @@
 resource "splunk_saved_searches" "lambda_exfil_to_external_s3" {
   name        = "AWS - Lambda exfiltrating data to external S3 bucket"
-  description = "Detects potential data exfiltration via AWS Lambda to an external S3 bucket. This detection identifies instances where an AWS Lambda function is performing PutObject or CopyObject operations to an S3 bucket outside your organization. MITRE ATT&CK: T1537"
+  description = <<-EOT
+    Detects potential data exfiltration via AWS Lambda to an external S3 bucket. This detection identifies instances where an AWS Lambda function is performing PutObject or CopyObject operations to an S3 bucket outside your organization. MITRE ATT&CK: T1537
+    Lambda function detected writing to external S3 bucket.
+    Target Bucket: $result.target_bucket$
+    Actor: $result.actor$
+    Destination Account: $result.dest_account$
+    Source Account: $result.src_account$
+    Region: $result.region$
+    Event Count: $result.event_count$
+    First Seen: $result.first_seen$
+    Last Seen: $result.last_seen$
+
+    MITRE ATT&CK: T1537 - Transfer Data to Cloud Account
+
+    Triage Steps:
+    1. Identify the Lambda and check the IAM role assigned to it
+    2. Investigate the destination bucket ownership
+    3. Check for recent UpdateFunctionCode events for this Lambda
+    4. Examine traffic volume - single file or high-frequency dump?
+EOT 
 
   search = <<-EOT
     `aws cloudtrail` 
@@ -31,24 +50,5 @@ resource "splunk_saved_searches" "lambda_exfil_to_external_s3" {
   # https://attack.mitre.org/techniques/T1537/
 
   # Alert message
-  alert_message = <<-EOT
-    Lambda function detected writing to external S3 bucket.
 
-    Target Bucket: $result.target_bucket$
-    Actor: $result.actor$
-    Destination Account: $result.dest_account$
-    Source Account: $result.src_account$
-    Region: $result.region$
-    Event Count: $result.event_count$
-    First Seen: $result.first_seen$
-    Last Seen: $result.last_seen$
-
-    MITRE ATT&CK: T1537 - Transfer Data to Cloud Account
-
-    Triage Steps:
-    1. Identify the Lambda and check the IAM role assigned to it
-    2. Investigate the destination bucket ownership
-    3. Check for recent UpdateFunctionCode events for this Lambda
-    4. Examine traffic volume - single file or high-frequency dump?
-  EOT
 }
