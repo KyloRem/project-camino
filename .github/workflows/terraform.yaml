@@ -1,0 +1,40 @@
+name: Terraform Deploy
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform # Install Terraform on the runner
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init # Download the Splunk provider
+        working-directory: organizations/portfolio # Runs command from portfolio directory
+        run: terraform init
+
+      - name: Terraform Plan # Shows what would change. Runs on every PR and on pushes to main before apply.
+        working-directory: organizations/portfolio
+        run: terraform plan -no-color
+        env:
+          # Passes secrets as Terraform variables
+          TF_VAR_splunk_url: ${{ secrets.SPLUNK_URL }}
+          TF_VAR_splunk_auth_token: ${{ secrets.SPLUNK_AUTH_TOKEN }}
+
+      - name: Terraform Apply # Deploys changes only on merge to main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Only applies after merge
+        working-directory: organizations/portfolio
+        run: terraform apply -auto-approve -no-color
+        env:
+          # Passes secrets as Terraform variables
+          TF_VAR_splunk_url: ${{ secrets.SPLUNK_URL }}
+          TF_VAR_splunk_auth_token: ${{ secrets.SPLUNK_AUTH_TOKEN }}
